@@ -1,0 +1,9 @@
+{
+  "name": "customer-profile-tools",
+  "version": "1.0.0",
+  "description": "Utility tools for generating test CSVs",
+  "scripts": {
+    "generate:profiles": "python generate_profiles.py",
+    "generate:shopify-products": "pip install -r requirements.txt && python generate_shopify_products.py"
+  }
+}

@@ -1,0 +1,58 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:profilesdb;DB_CLOSE_DELAY=-1
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  h2:
+    console:
+      enabled: true
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: false
+    database-platform: org.hibernate.dialect.H2Dialect
+
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    locations: classpath:db/migration
+
+  quartz:
+    job-store-type: jdbc
+    jdbc:
+      initialize-schema: never
+    properties:
+      org:
+        quartz:
+          scheduler:
+            instanceName: clusteredScheduler
+            instanceId: AUTO
+          jobStore:
+            class: org.quartz.impl.jdbcjobstore.JobStoreTX
+            driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+            tablePrefix: QRTZ_
+            isClustered: true
+            clusterCheckinInterval: 20000
+            dataSource: myDS
+          dataSource:
+            myDS:
+              driver: org.h2.Driver
+              URL: jdbc:h2:mem:profilesdb;DB_CLOSE_DELAY=-1
+              user: sa
+              password:
+          threadPool:
+            class: org.quartz.simpl.SimpleThreadPool
+            threadCount: 10
+
+shopify:
+  store-url: https://abcdefgh.myshopify.com
+  access-token: shpat_abcdefgh
+  # Optional, only needed for OAuth installs (e.g., multiple stores)
+  api-key: abcdefgh
+  api-secret: abcdefgh
+  batch:
+    product-size: 10
+    customer-size: 25
+    order-size: 15
+    customer-profile-size: 100
